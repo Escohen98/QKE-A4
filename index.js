@@ -31,6 +31,8 @@ let yAxis = d3.svg.axis()
 //Arbitrary height
 let yval = 450;
 //Taken from http://bl.ocks.org/jacobw56/2fd529120462c8ee044bccc3b0836547
+//Changed it up a bit
+//Took hours to figure out, but I did it!!!!
 let area = d3.svg.area()
   .x(function(d) { if(x(d.q>445)) return x(d.q); return x(0);})
   .y0(yval)
@@ -39,7 +41,7 @@ let area = d3.svg.area()
 let area1 = d3.svg.area()
   .x(function(d) {  if(x(d.q)<=445) return x(d.q); return x(0);})
   .y0(yval)
-  .y1(function(d) {return y(d.o); });
+  .y1(function(d) { if(d.o<d.p) return y(d.o); return y(d.p) });
 
 let line = d3.svg.line()
     .x(function(d) {
@@ -77,9 +79,9 @@ svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
 
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
+// svg.append("g")
+//     .attr("class", "y axis")
+//     .call(yAxis);
 
 svg.append("path")
     .datum(data)
