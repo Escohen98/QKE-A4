@@ -31,6 +31,7 @@ let yAxis = d3.svg.axis()
 
 let yval = 450; //Arbitrary Height
 let xval = 445; //Stopping point. Max x = 800 (0 coordinate = 445)
+
 //Taken from http://bl.ocks.org/jacobw56/2fd529120462c8ee044bccc3b0836547
 //Changed it up a bit
 //Took hours to figure out, but I did it!!!!
