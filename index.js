@@ -40,10 +40,10 @@ let line = d3.svg.line()
 //Custom code
 let line2 = d3.svg.line()
   .x(function(d) {
-    return x(d.q);
+    return x(d.o);
   })
   .y(function(d) {
-    return y(d.o);
+    return y(d.p);
   })
 //
 
