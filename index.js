@@ -28,18 +28,19 @@ let yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-//Arbitrary height
-let yval = 450;
+
+let yval = 450; //Arbitrary Height
+let xval = 445; //Stopping point. Max x = 800 (0 coordinate = 445)
 //Taken from http://bl.ocks.org/jacobw56/2fd529120462c8ee044bccc3b0836547
 //Changed it up a bit
 //Took hours to figure out, but I did it!!!!
 let area = d3.svg.area() //Red
-  .x(function(d) {  if(x(d.q)>445) return x(d.q); return x(0);})
+  .x(function(d) {  if(x(d.q)>xval) return x(d.q); return x(0);})
   .y0(yval)
   .y1(function(d) { if(d.p<d.o )return y(d.p); return y(d.p); });
 
 let area1 = d3.svg.area() //Blue
-  .x(function(d) {  if(x(d.q)<=445) return x(d.q); return x(0);})
+  .x(function(d) {  if(x(d.q)<=xval) return x(d.q); return x(0);})
   .y0(yval)
   .y1(function(d) { if(d.o<d.p) return y(d.o); return y(d.p) });
 
