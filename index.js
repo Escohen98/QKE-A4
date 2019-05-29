@@ -34,7 +34,7 @@ let yval = 450;
 //Changed it up a bit
 //Took hours to figure out, but I did it!!!!
 let area = d3.svg.area() //Red
-  .x(function(d) {  if(x(d.q)>445) return x(d.q); return x(0);}) 
+  .x(function(d) {  if(x(d.q)>445) return x(d.q); return x(0);})
   .y0(yval)
   .y1(function(d) { if(d.p<d.o )return y(d.p); return y(d.p); });
 
@@ -108,7 +108,7 @@ function getData() {
 
 // loop to populate data array with
 // probabily - quantile pairs
-for (let i = 0; i < 100000; i++) {
+for (let i = 0; i < 1000000; i++) {
     q = normal() // calc random draw from normal dist
     p = gaussian(q) // calc prob of rand draw
     o = gaussian(q, 1) // calc prob of rand draw with mean = 1, custom code
