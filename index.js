@@ -34,7 +34,7 @@ let yval = 450;
 //Changed it up a bit
 //Took hours to figure out, but I did it!!!!
 let area = d3.svg.area() //Red
-  .x(function(d) { if(x(d.q<0)) return x(d.q); return x(1000);})
+  .x(function(d) {  if(x(d.q)>445) return x(d.q); return x(0);}) 
   .y0(yval)
   .y1(function(d) { if(d.p<d.o )return y(d.p); return y(d.p); });
 
