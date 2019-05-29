@@ -87,7 +87,7 @@ data.sort(function(x, y) {
 // from http://bl.ocks.org/mbostock/4349187
 // Sample from a normal distribution with mean 0, stddev 1.
 function normal() {
-    var x = 0,
+    var x = 1,
         y = 0,
         rds, c;
     do {
