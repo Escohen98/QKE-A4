@@ -16,3 +16,19 @@ body {
         stroke: steelblue;
         stroke-width: 1.5px;
     }
+
+    .line1 {
+        fill: none;
+        stroke: red;
+        stroke-width: 1.5px;
+    }
+
+    .area {
+    fill: red;
+    stroke-width: 0;
+    }
+
+    .area1 {
+      fill: blue;
+      stroke-width: 0;
+    }
