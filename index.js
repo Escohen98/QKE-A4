@@ -1,7 +1,6 @@
 //Taken from http://bl.ocks.org/phil-pedruco/88cb8a51cdce45f13c7e
 //setting up empty data array
 let data = [];
-let points = [];
 
 getData(); // popuate data
 
@@ -29,6 +28,19 @@ let yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
+//Arbitrary height
+let yval = 450;
+//Taken from http://bl.ocks.org/jacobw56/2fd529120462c8ee044bccc3b0836547
+let area = d3.svg.area()
+  .x(function(d) { if(x(d.q>445)) return x(d.q); return x(0);})
+  .y0(yval)
+  .y1(function(d) { if(d.p<d.o )return y(d.p); return y(d.o); });
+
+let area1 = d3.svg.area()
+  .x(function(d) {  if(x(d.q)<=445) return x(d.q); return x(0);})
+  .y0(yval)
+  .y1(function(d) {return y(d.o); });
+
 let line = d3.svg.line()
     .x(function(d) {
         return x(d.q);
@@ -40,24 +52,12 @@ let line = d3.svg.line()
 //Custom code
 let line2 = d3.svg.line()
   .x(function(d) {
-    return x(d.o);
+    return x(d.q);
   })
   .y(function(d) {
-    return y(d.p);
+    return y(d.o);
   })
 //
-
-//Taken from http://bl.ocks.org/jacobw56/2fd529120462c8ee044bccc3b0836547
-let area = d3.svg.area()
-  .x(function(d) { if(x(d.q)>445) return x(d.q); return x(0);})
-  .y0(450)
-  .y1(function(d) { return y(d.p); });
-
-let area1 = d3.svg.area()
-  .x(function(d) { if(x(d.q)<=445) return x(d.q); return x(0);})
-  .y0(450)
-  .y1(function(d) { return y(d.p); });
-
 let svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -71,70 +71,50 @@ y.domain(d3.extent(data, function(d) {
     return d.p;
 }));
 
+//Intersection (0.5, 0.352)
 svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
 
-// svg.append("g")
-//     .attr("class", "y axis")
-//     .call(yAxis);
-
-svg.append("path")
-  .datum(data)
-  .attr("class", "area")
-  .attr("d", area);
-
-svg.append("path")
-  .datum(data)
-  .attr("class", "area1")
-  .attr("d", area1);
+svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
 
 svg.append("path")
     .datum(data)
     .attr("class", "line")
     .attr("d", line)
 
-
 //Custom code
 svg.append("path")
     .datum(data)
     .attr("class", "line1")
-    .attr("d", line2)
+    .attr("d", line2);
+
+  svg.append("path")
+    .datum(data)
+    .attr("class", "area")
     .attr("d", area);
 
-//Taken from https://www.dashingd3js.com/svg-paths-and-d3js
-let lineFunction = d3.svg.line()
-  .x(function(d) { return d.x; })
-  .y(function(d) { return d.y; })
-  .interpolate("linear");
-
-
+  svg.append("path")
+    .datum(data)
+    .attr("class", "area1")
+    .attr("d", area1);
 
 function getData() {
 
 // loop to populate data array with
 // probabily - quantile pairs
 for (let i = 0; i < 100000; i++) {
-  /*y*/  q = normal() // calc random draw from normal dist
-  /*x*/  p = gaussian(q) // calc prob of rand draw
-  /*x*/  o = gaussian(q, 1) // calc prob of rand draw with mean = 1, custom code
+    q = normal() // calc random draw from normal dist
+    p = gaussian(q) // calc prob of rand draw
+    o = gaussian(q, 1) // calc prob of rand draw with mean = 1, custom code
     el = {
         "q": q,
         "p": p,
         "o": o
     }
-    //P is unshifted mean
-    //O is shifted mean
-    // if(p>0.5) {
-    //   console.log("This happened...")
-    //   let point = [{"x": p, "y": q}, {"x": p, "y": 0}];
-    //   svg.append("path")
-    //     .attr("d", linefunction(points))
-    //     .attr("stroke", "red")
-    //     .attr("stroke-width", 2)
-    //     .attr("fill", none);
-    // }
     data.push(el)
 };
 
@@ -143,7 +123,6 @@ for (let i = 0; i < 100000; i++) {
 data.sort(function(x, y) {
     return x.q - y.q;
 });
-console.log(data)
 }
 
 // from http://bl.ocks.org/mbostock/4349187

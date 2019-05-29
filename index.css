@@ -13,14 +13,14 @@ body {
     }*/
     .line {
         fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
+        stroke: yellow;
+        stroke-width: 5px;
     }
 
     .line1 {
         fill: none;
-        stroke: red;
-        stroke-width: 1.5px;
+        stroke: green;
+        stroke-width: 5px;
     }
 
     .area {
@@ -29,6 +29,6 @@ body {
     }
 
     .area1 {
-      fill: blue;
+      fill: steelblue;
       stroke-width: 0;
     }
