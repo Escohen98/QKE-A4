@@ -36,6 +36,15 @@ var line = d3.svg.line()
         return y(d.p);
     });
 
+//Custom code
+var line2 = d3.svg.line()
+  .x(function(d) {
+    return x(d.q);
+  })
+  .y(function(d) {
+    return y(d.o);
+  })
+//
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -61,7 +70,13 @@ svg.append("g")
 svg.append("path")
     .datum(data)
     .attr("class", "line")
-    .attr("d", line);
+    .attr("d", line)
+
+//Custom code
+svg.append("path")
+    .datum(data)
+    .attr("class", "line")
+    .attr("d", line2);
 
 function getData() {
 
@@ -70,9 +85,11 @@ function getData() {
 for (var i = 0; i < 100000; i++) {
     q = normal() // calc random draw from normal dist
     p = gaussian(q) // calc prob of rand draw
+    o = gaussian(q, 1) // calc prob of rand draw with mean = 1, custom code
     el = {
         "q": q,
-        "p": p
+        "p": p,
+        "o": o
     }
     data.push(el)
 };
@@ -101,9 +118,9 @@ function normal() {
 
 //taken from Jason Davies science library
 // https://github.com/jasondavies/science.js/
-function gaussian(x) {
+function gaussian(x, m=0) {
 	var gaussianConstant = 1 / Math.sqrt(2 * Math.PI),
-		mean = 0,
+		mean = m,
     	sigma = 1;
 
     x = (x - mean) / sigma;
